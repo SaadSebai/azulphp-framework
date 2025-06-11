@@ -2,6 +2,7 @@
     "name": "azulphp/framework",
     "description": "AzulPHP is a simple PHP framework.",
     "type": "library",
+    "keywords": ["azul", "azulphp", "framework"],
     "license": "MIT",
     "autoload": {
         "psr-4": {
