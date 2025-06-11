@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests{{ namespace }};
 
-use App\Core\Requests\FormRequest;
+use Azulphp\Requests\FormRequest;
 
 class {{ class }} extends FormRequest
 {

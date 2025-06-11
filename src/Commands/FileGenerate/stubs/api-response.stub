@@ -2,7 +2,7 @@
 
 namespace App\Http\ApiResponses{{ namespace }};
 
-use App\Core\ApiResource;
+use Azulphp\ApiResource;
 
 class {{ class }} extends ApiResource
 {

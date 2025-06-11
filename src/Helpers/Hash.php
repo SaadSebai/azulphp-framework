@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Helpers;
+namespace Azulphp\Helpers;
 
 class Hash
 {

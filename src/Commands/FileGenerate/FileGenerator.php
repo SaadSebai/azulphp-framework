@@ -45,7 +45,7 @@ abstract class FileGenerator extends ConsoleCommand
      */
     protected function stubPath(string $stubPath): string
     {
-        return base_path("app/Core/Commands/FileGenerate/stubs/$stubPath.stub");
+        return __DIR__ . "/stubs/$stubPath.stub";
     }
 
     /**
