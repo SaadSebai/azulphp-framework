@@ -1,0 +1,22 @@
+{
+    "name": "azulphp/framework",
+    "description": "AzulPHP is a simple PHP framework.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Azulphp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "saadsebai",
+            "email": "saadsebaii@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "ext-pdo": "*",
+        "ext-readline": "*"
+    }
+}

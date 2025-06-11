@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Repositories{{ namespace }};
+
+class {{ class }} extends Repository
+{
+    //
+}
