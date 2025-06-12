@@ -10,6 +10,14 @@ use Azulphp\Helpers\Str;
  */
 abstract class FileGenerator extends ConsoleCommand
 {
+    protected string $fileName;
+
+    public function __construct(array $args = [], array $flags = [])
+    {
+        parent::__construct($args, $flags);
+        $this->fileName = $this->getInputFileName();
+    }
+
     /**
      * Generate Class form stub.
      *
@@ -49,13 +57,13 @@ abstract class FileGenerator extends ConsoleCommand
     }
 
     /**
-     * Get the giving class name.
+     * Get the giving file name without including the path if it was entered.
      *
      * @return string
      */
-    protected function getClass(): string
+    protected function getFileNameWithoutPath(): string
     {
-        return Str::afterLast($this->args[0]);
+        return Str::afterLast($this->fileName);
     }
 
     /**
@@ -69,5 +77,22 @@ abstract class FileGenerator extends ConsoleCommand
         if (($dirname = dirname($targetPath)) !== '.')
             return '\\' . Str::pathToNameSpace($dirname);
         else return '';
+    }
+
+    /**
+     * Ask the user to enter file name if he didn't provide it in the command.
+     *
+     * @return string
+     */
+    protected function getInputFileName(): string
+    {
+        if (!isset($this->args[0]))
+        {
+            return $this->input->requireLine(
+                before: fn () => $this->output->secondary("Please prove your class name: (*)")
+            );
+        }
+
+        return $this->args[0];
     }
 }

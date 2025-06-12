@@ -8,14 +8,16 @@ class RequestGenerator extends FileGenerator
 {
     public function handle(): void
     {
-        $targetPath = "app/Http/Requests/{$this->args[0]}";
+        $file = $this->getInputFileName();
+
+        $targetPath = "app/Http/Requests/$file";
 
         $this->generate(
             stubPath: $this->stubPath('request'),
             targetPath: $targetPath,
             replacements: [
-                'namespace' => $this->getNamespace($this->args[0]),
-                'class' => $this->getClass()
+                'namespace' => $this->getNamespace($file),
+                'class' => $this->getFileNameWithoutPath()
             ]
         );
     }

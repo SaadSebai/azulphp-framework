@@ -8,14 +8,16 @@ class ServiceGenerator extends FileGenerator
 {
     public function handle(): void
     {
-        $targetPath = "app/Services/{$this->args[0]}";
+        $file = $this->getInputFileName();
+
+        $targetPath = "app/Services/$file";
 
         $this->generate(
             stubPath: $this->stubPath('service'),
             targetPath: $targetPath,
             replacements: [
-                'namespace' => $this->getNamespace($this->args[0]),
-                'class' => $this->getClass()
+                'namespace' => $this->getNamespace($file),
+                'class' => $this->getFileNameWithoutPath()
             ]
         );
     }

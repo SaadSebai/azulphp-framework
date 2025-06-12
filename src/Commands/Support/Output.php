@@ -73,6 +73,11 @@ class Output
         $this->line("[Info!]:: $output", self::BLUE);
     }
 
+    public function secondary(string $output): void
+    {
+        $this->line($output, self::CYAN);
+    }
+
     /**
      * Skip line.
      *

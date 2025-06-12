@@ -1,11 +1,9 @@
 <?php
 
 use Azulphp\Helpers\ResponseStatus;
-use Azulphp\Router;
+use Azulphp\Routing\Router;
 use Azulphp\Session;
-use JetBrains\PhpStorm\NoReturn;
 
-#[NoReturn]
 function dd(mixed $value): void
 {
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1] ?? null;
@@ -30,7 +28,6 @@ function base_path(string $path): string
     return BASE_PATH . $path;
 }
 
-#[NoReturn]
 function redirect(string $path): void
 {
     header("location: {$path}");
@@ -68,7 +65,6 @@ function old(string $key, ?string $default = ''): string
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 
-#[NoReturn]
 function abort($code = ResponseStatus::NOT_FOUND): void
 {
     http_response_code($code);
@@ -108,6 +104,11 @@ function phpTypes(): array
     ];
 }
 
+function valideObjectType(string $type): bool
+{
+    return class_exists($type) || interface_exists($type);
+}
+
 /**
  * Check if the type is a valid php type or class/interface
  *
@@ -116,5 +117,5 @@ function phpTypes(): array
  */
 function valideVarType(string $type): bool
 {
-    return (in_array($type, phpTypes()) || class_exists($type) || interface_exists($type));
+    return in_array($type, phpTypes()) || valideObjectType($type);
 }

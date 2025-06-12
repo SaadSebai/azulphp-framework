@@ -1,6 +1,6 @@
 <?php
 
-namespace Azulphp\Requests;
+namespace Azulphp\Routing\Requests;
 
 use Azulphp\Exceptions\ValidationException;
 use Azulphp\Helpers\Csrf;

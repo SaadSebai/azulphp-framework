@@ -1,8 +1,8 @@
 <?php
 
-namespace Azulphp\Requests;
+namespace Azulphp\Routing\Requests;
 
-use Azulphp\Validator;
+use Azulphp\Routing\Validator;
 
 trait Paginatable
 {

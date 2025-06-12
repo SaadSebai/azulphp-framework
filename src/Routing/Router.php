@@ -1,8 +1,8 @@
 <?php
 
-namespace Azulphp;
+namespace Azulphp\Routing;
 
-use Azulphp\Requests\FormRequest;
+use Azulphp\Routing\Requests\FormRequest;
 use BadMethodCallException;
 use InvalidArgumentException;
 use ReflectionException;
@@ -19,6 +19,8 @@ use ReflectionMethod;
  */
 class Router
 {
+    const string HOME = '/';
+
     /**
      * List of all routes.
      *
@@ -138,7 +140,7 @@ class Router
      */
     public function previousUrl(): string
     {
-        return $_SERVER['HTTP_REFERER'] ?? static::home();
+        return $_SERVER['HTTP_REFERER'] ?? self::HOME;
     }
 
     /**
@@ -166,16 +168,6 @@ class Router
         }
 
         return false;
-    }
-
-    /**
-     * Redirect to the home page.
-     *
-     * @return string
-     */
-    public static function home(): string
-    {
-        return Session::has('user') ? '/home' : '/';
     }
 
     /**

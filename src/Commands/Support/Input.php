@@ -35,7 +35,7 @@ class Input
             $before();
             $line = $this->line();
 
-            if ($validation) $validation($line, $entered);
+            if ($validation) $entered = $validation($line);
             elseif ($line !== '') $entered = true;
         }
 

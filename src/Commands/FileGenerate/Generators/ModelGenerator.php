@@ -20,7 +20,7 @@ class ModelGenerator extends FileGenerator
 
     public function handle(): void
     {
-        $targetPath = "app/Models/{$this->args[0]}";
+        $targetPath = "app/Models/$this->fileName";
         $this->properties = $this->getProperties();
         $imports = $this->imports();
         $contant = $this->contant();
@@ -29,8 +29,8 @@ class ModelGenerator extends FileGenerator
             stubPath: $this->stubPath('model'),
             targetPath: $targetPath,
             replacements: [
-                'namespace' => $this->getNamespace($this->args[0]),
-                'class' => $this->getClass(),
+                'namespace' => $this->getNamespace($this->fileName),
+                'class' => $this->getFileNameWithoutPath(),
                 'contant' => $contant,
                 'imports' => $imports,
             ]
@@ -85,14 +85,14 @@ class ModelGenerator extends FileGenerator
 
         while ($isWriting)
         {
-            $this->output->line('Enter the property name: (press ENTER if you want to finish)', Output::CYAN);
+            $this->output->secondary('Enter the property name: (press ENTER if you want to finish)');
             $prop = $this->input->line();
 
             if ($prop !== '')
             {
                 $type = $this->input->requireLine(
-                    before: fn() => $this->output->line('Enter the property type: (*)', Output::CYAN),
-                    validation: fn ($line, &$entered) => $entered = valideVarType($line)
+                    before: fn() => $this->output->secondary('Enter the property type: (*)'),
+                    validation: fn ($line) => valideVarType($line)
                 );
 
                 $inputs[] = compact('prop', 'type');

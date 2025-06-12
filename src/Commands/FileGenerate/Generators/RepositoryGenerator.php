@@ -9,14 +9,16 @@ class RepositoryGenerator extends FileGenerator
 
     public function handle(): void
     {
-        $targetPath = "app/Repositories/{$this->args[0]}";
+        $file = $this->getInputFileName();
+
+        $targetPath = "app/Repositories/$file";
 
         $this->generate(
             stubPath: $this->stubPath('repository'),
             targetPath: $targetPath,
             replacements: [
-                'namespace' => $this->getNamespace($this->args[0]),
-                'class' => $this->getClass()
+                'namespace' => $this->getNamespace($file),
+                'class' => $this->getFileNameWithoutPath()
             ]
         );
     }
