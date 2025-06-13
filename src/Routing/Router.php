@@ -2,8 +2,14 @@
 
 namespace Azulphp\Routing;
 
+use Azulphp\Core\App;
+use Azulphp\Core\Config;
+use Azulphp\Exceptions\ValidationException;
+use Azulphp\Helpers\ResponseStatus;
 use Azulphp\Routing\Requests\FormRequest;
+use Azulphp\Session;
 use BadMethodCallException;
+use Exception;
 use InvalidArgumentException;
 use ReflectionException;
 use ReflectionMethod;
@@ -39,7 +45,7 @@ class Router
         'get', 'post', 'put', 'patch', 'delete'
     ];
 
-    public function __construct()
+    public function __construct(protected ?string $web, protected ?string $api)
     {
         $this->globalMiddlewares = array_keys((require base_path('config/middlewares.php'))['global']) ?? [];
     }
@@ -102,13 +108,14 @@ class Router
     /**
      * Load the controller and inject the necessary params in it.
      *
-     * @param  $uri
-     * @param  $method
      * @return mixed|void
      * @throws ReflectionException
      */
-    public function route($uri, $method)
+    public function route()
     {
+        $uri = $this->getUri();
+        $method = $this->getMethod();
+
         foreach ($this->routes as $route) {
             $matches = [];
 
@@ -222,5 +229,95 @@ class Router
             $params += $_GET;
 
         return $path .'?'. http_build_query($params);
+    }
+
+    /**
+     * Require the necessary routes.
+     *
+     * @return $this
+     */
+    public function requireRoutes(): static
+    {
+        $router = $this;
+
+        if ($this->web) require_once $this->web;
+        if ($this->api) require_once $this->api;
+
+        return $this;
+    }
+
+    /**
+     * Get the current URI.
+     *
+     * @return mixed|string
+     */
+    public function getUri()
+    {
+        return parse_url($_SERVER['REQUEST_URI'])['path'] ?? '';
+    }
+
+    /**
+     * Get the used method.
+     *
+     * @return mixed
+     */
+    public function getMethod(): mixed
+    {
+        return $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+    }
+
+    /**
+     * Redirect to route.
+     *
+     * @param  string  $path
+     * @return void
+     */
+    public function redirect(string $path): void
+    {
+        header("location: {$path}");
+        exit();
+    }
+
+    /**
+     * Redirect to the previous route.
+     *
+     * @return void
+     */
+    public function back(): void
+    {
+        $this->redirect($this->previousUrl());
+    }
+
+    /**
+     * Handle the request in the index.
+     *
+     * @return void
+     * @throws ReflectionException
+     */
+    public function handleRequest(): void
+    {
+        Session::start();
+
+        $this->requireRoutes();
+
+        try {
+            $this->route();
+        }
+        catch (ValidationException $exception) {
+            Session::flash('errors', $exception->errors);
+            Session::flash('old', $exception->old);
+
+            $this->back();
+        }
+        catch (Exception $exception) {
+            $config = App::resolve(Config::class);
+
+            if($config->getConfig('production')) abort(ResponseStatus::SERVER_ERROR);
+            else throw $exception;
+        }
+
+        register_shutdown_function(function () {
+            Session::unflash();
+        });
     }
 }

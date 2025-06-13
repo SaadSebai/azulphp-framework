@@ -2,7 +2,6 @@
 
 namespace Azulphp\Commands;
 
-use Azulphp\Commands\Database\ConsoleCommand;
 use Azulphp\Exceptions\ConsoleException;
 use Exception;
 

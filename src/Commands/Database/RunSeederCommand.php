@@ -2,6 +2,7 @@
 
 namespace Azulphp\Commands\Database;
 
+use Azulphp\Commands\ConsoleCommand;
 use Exception;
 
 class RunSeederCommand extends ConsoleCommand

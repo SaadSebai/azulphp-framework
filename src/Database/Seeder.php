@@ -2,7 +2,7 @@
 
 namespace Azulphp\Database;
 
-use Azulphp\App;
+use Azulphp\Core\App;
 use Azulphp\Commands\CommandManager;
 use Azulphp\Commands\Runnable;
 use Azulphp\Commands\Support\Output;

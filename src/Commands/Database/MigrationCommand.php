@@ -2,8 +2,9 @@
 
 namespace Azulphp\Commands\Database;
 
-use Azulphp\App;
-use Azulphp\Database;
+use Azulphp\Commands\ConsoleCommand;
+use Azulphp\Core\App;
+use Azulphp\Database\Database;
 use Exception;
 
 class MigrationCommand extends ConsoleCommand
@@ -13,13 +14,16 @@ class MigrationCommand extends ConsoleCommand
     /**
      * @throws Exception
      */
-    public function __construct(protected array $args = [], protected array $flags)
+    public function __construct(protected array $args = [], protected array $flags = [])
     {
         parent::__construct($args, $flags);
 
         $this->db = App::resolve(Database::class);
     }
 
+    /**
+     * @throws Exception
+     */
     public function handle(): void
     {
         $this->migrate();
@@ -56,7 +60,7 @@ class MigrationCommand extends ConsoleCommand
      */
     private function getMigrations(): array
     {
-        $path = BASE_PATH . 'database/migrations';
+        $path = base_path('database/migrations');
         $file = glob($path . '/*.php');
 
         if ($file)

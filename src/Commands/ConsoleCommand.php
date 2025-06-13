@@ -1,12 +1,11 @@
 <?php
 
-namespace Azulphp\Commands\Database;
+namespace Azulphp\Commands;
 
 use AllowDynamicProperties;
-use Azulphp\App;
-use Azulphp\Commands\CommandManager;
 use Azulphp\Commands\Support\Input;
 use Azulphp\Commands\Support\Output;
+use Azulphp\Core\App;
 use Exception;
 
 /**

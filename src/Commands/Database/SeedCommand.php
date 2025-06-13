@@ -2,7 +2,7 @@
 
 namespace Azulphp\Commands\Database;
 
-use Database\Seeders\DatabaseSeeder;
+use Azulphp\Commands\ConsoleCommand;
 use Exception;
 
 class SeedCommand extends ConsoleCommand
@@ -12,7 +12,7 @@ class SeedCommand extends ConsoleCommand
      */
     public function handle(): void
     {
-        $this->run('run', [DatabaseSeeder::class]);
+        $this->run('run', ['Database\\Seeders\\DatabaseSeeder']);
 
         $this->output->success('Records created');
         $this->output->skipLine();

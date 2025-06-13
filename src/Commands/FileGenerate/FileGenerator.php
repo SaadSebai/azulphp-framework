@@ -2,7 +2,7 @@
 
 namespace Azulphp\Commands\FileGenerate;
 
-use Azulphp\Commands\Database\ConsoleCommand;
+use Azulphp\Commands\ConsoleCommand;
 use Azulphp\Helpers\Str;
 
 /**

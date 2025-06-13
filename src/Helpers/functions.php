@@ -28,12 +28,6 @@ function base_path(string $path): string
     return BASE_PATH . $path;
 }
 
-function redirect(string $path): void
-{
-    header("location: {$path}");
-    exit();
-}
-
 function view(string $path, array $attributes = [], ?string $layout = null): bool
 {
     extract($attributes);

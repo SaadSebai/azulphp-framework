@@ -1,6 +1,6 @@
 <?php
 
-namespace Azulphp;
+namespace Azulphp\Database;
 
 use PDO;
 use PDOStatement;
