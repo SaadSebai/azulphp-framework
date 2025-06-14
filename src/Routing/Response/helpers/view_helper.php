@@ -8,3 +8,8 @@ function view(string $path, array $attributes = [], ?string $layout = null, stri
 {
     return View::make($path, $attributes, $layout, $viewResponse);
 }
+
+function partial(string $path): void
+{
+    require base_path("views/$path.php");
+}

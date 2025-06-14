@@ -23,16 +23,6 @@ function dd(mixed $value): void
     die();
 }
 
-function base_path(string $path): string
-{
-    return BASE_PATH . $path;
-}
-
-function partial(string $path): void
-{
-    require base_path("views/$path.php");
-}
-
 function old(string $key, ?string $default = ''): string
 {
     $value = Session::get('old')[$key] ?? $default;
@@ -94,4 +84,5 @@ function valideVarType(string $type): bool
     return in_array($type, phpTypes()) || valideObjectType($type);
 }
 
-require_once __DIR__ . '/../Response/helpers/view_helpers.php';
+require_once __DIR__.'/../Routing/Response/helpers/view_helper.php';
+require_once __DIR__.'/../Core/helpers/app_helper.php';

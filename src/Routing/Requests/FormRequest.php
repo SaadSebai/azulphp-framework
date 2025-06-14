@@ -4,7 +4,6 @@ namespace Azulphp\Routing\Requests;
 
 use Azulphp\Exceptions\ValidationException;
 use Azulphp\Helpers\Csrf;
-use http\Exception\RuntimeException;
 use ReflectionClass;
 
 abstract class FormRequest
@@ -85,7 +84,12 @@ abstract class FormRequest
         $this->rules = $this->rules() + $this->paginationRules();
     }
 
-    public function toDto()
+    /**
+     * Create Dto instance if it exists in the request class.
+     *
+     * @return array|mixed
+     */
+    public function toDto(): mixed
     {
         $reflection = new ReflectionClass($this);
 

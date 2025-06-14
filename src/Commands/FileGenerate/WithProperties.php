@@ -56,6 +56,13 @@ trait WithProperties
         return $result;
     }
 
+
+    /**
+     * Create the constructor skeleton that will be printed in the stub.
+     *
+     * @param  array  $properties
+     * @return string
+     */
     protected function printConstructor(array $properties): string
     {
         $result = "\tpublic function __construct(";

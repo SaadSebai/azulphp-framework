@@ -2,6 +2,7 @@
 
 namespace Azulphp\Database;
 
+use Azulphp\Helpers\Arr;
 use PDO;
 use PDOStatement;
 
@@ -10,14 +11,12 @@ class Database
     private PDO $connection;
     private false|PDOStatement $statement;
 
-    public function __construct($config, $username = 'root', $password = '')
+    public function __construct(array $config)
     {
-        $dsn = "mysql:" . http_build_query(data: $config, arg_separator: ';');
-
         $this->connection = new PDO(
-            $dsn,
-            $username,
-            $password,
+            $this->dsn($config),
+            $config['username'],
+            $config['password'],
             [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]
@@ -111,5 +110,19 @@ class Database
         return fn () => !is_null($offset)
             ? $this->statement->bindValue(':offset', $offset, PDO::PARAM_INT)
             : null;
+    }
+
+    /**
+     * Build DSN.
+     *
+     * @param  array  $config
+     * @return string
+     */
+    protected function dsn(array $config)
+    {
+        return "mysql:" . http_build_query(
+                data: Arr::only($config, ['host', 'port', 'dbname', 'charset']),
+                arg_separator: ';'
+            );
     }
 }

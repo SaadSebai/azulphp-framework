@@ -12,6 +12,12 @@ class Validator
     {
     }
 
+    /**
+     * Validate the value and return errors.
+     *
+     * @param  callable  $rules
+     * @return array
+     */
     public function validate(callable $rules): array
     {
         $errors = [];

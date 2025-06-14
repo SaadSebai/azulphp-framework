@@ -22,7 +22,7 @@ abstract class ApiResponse implements Response
     {
         $result = ['data' => $this->data];
         $result += !empty($this->pagination) ? ['meta' => $this->pagination] : [];
-        
+
         return $this->toJson($result);
     }
 
