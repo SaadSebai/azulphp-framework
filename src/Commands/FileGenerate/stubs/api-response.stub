@@ -2,7 +2,7 @@
 
 namespace App\Http\ApiResponses{{ namespace }};
 
-use Azulphp\Response\Api\ApiResponse;
+use Azulphp\Routing\Response\Api\ApiResponse;
 
 class {{ class }} extends ApiResponse
 {

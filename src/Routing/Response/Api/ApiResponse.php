@@ -1,11 +1,11 @@
 <?php
 
-namespace Azulphp\Response\Api;
+namespace Azulphp\Routing\Response\Api;
 
 use Azulphp\Collections\Collection;
 use Azulphp\Collections\Pagination;
-use Azulphp\Response\Response;
-use Azulphp\Response\ResponseStatus;
+use Azulphp\Routing\Response\Response;
+use Azulphp\Routing\Response\ResponseStatus;
 use JsonException;
 
 abstract class ApiResponse implements Response
@@ -20,7 +20,10 @@ abstract class ApiResponse implements Response
      */
     public function response(): string
     {
-        return $this->toJson(['data' => $this->data] + ['meta' => $this->pagination]);
+        $result = ['data' => $this->data];
+        $result += !empty($this->pagination) ? ['meta' => $this->pagination] : [];
+        
+        return $this->toJson($result);
     }
 
     /**

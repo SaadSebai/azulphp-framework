@@ -1,6 +1,6 @@
 <?php
 
-namespace Azulphp\Response\View;
+namespace Azulphp\Routing\Response\View;
 
 class View
 {

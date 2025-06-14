@@ -8,7 +8,7 @@ use Azulphp\Commands\FileGenerate\WithProperties;
 /**
  * Create a model with the giving properties.
  */
-class ModelGenerator extends FileGenerator
+class DtoGenerator extends FileGenerator
 {
     use WithProperties;
 
@@ -21,13 +21,13 @@ class ModelGenerator extends FileGenerator
 
     public function handle(): void
     {
-        $targetPath = "app/Models/$this->fileName";
+        $targetPath = "app/Http/Dtos/$this->fileName";
         $this->properties = $this->getProperties();
-        $imports = $this->imports('App\\Models');
+        $imports = $this->imports('App\\Http\\Dtos');
         $contant = $this->contant();
 
         $this->generate(
-            stubPath: $this->stubPath('model'),
+            stubPath: $this->stubPath('dto'),
             targetPath: $targetPath,
             replacements: [
                 'namespace' => $this->getNamespace($this->fileName),
@@ -45,7 +45,7 @@ class ModelGenerator extends FileGenerator
      */
     protected function contant(): string
     {
-        $contant = $this->printProperties($this->properties);
+        $contant = $this->printConstructor($this->properties);
         $contant .= $this->printMutators($this->properties);
 
         return $contant;

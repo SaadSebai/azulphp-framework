@@ -1,9 +1,9 @@
 <?php
 
-namespace Azulphp\Response;
+namespace Azulphp\Routing\Response;
 
-use Azulphp\Response\Api\ApiResponse;
-use Azulphp\Response\View\ViewResponse;
+use Azulphp\Routing\Response\Api\ApiResponse;
+use Azulphp\Routing\Response\View\ViewResponse;
 use JsonException;
 
 class ResponseHandler

@@ -4,6 +4,8 @@ namespace Azulphp\Routing\Requests;
 
 use Azulphp\Exceptions\ValidationException;
 use Azulphp\Helpers\Csrf;
+use http\Exception\RuntimeException;
+use ReflectionClass;
 
 abstract class FormRequest
 {
@@ -28,23 +30,23 @@ abstract class FormRequest
      * @return  array
      * @throws ValidationException
      */
-    public function validated(): array
+    public function validated(): mixed
     {
         $this->validated = [];
 
         $this->setRules();
 
-        foreach ($this->rules as $key => $rule) {
-            if (array_key_exists($key, $this->data))
-            {
-                $rule($key, $this->data[$key]);
-                $this->validated[$key] = $this->data[$key];
-            }
+        foreach ($this->rules as $key => $param_rules) {
+            $validator = new Validator(name: $key, value: $this->data[$key] ?? null);
+            $errors = $validator->validate($param_rules);
+
+            if (!empty($errors)) $this->errors[$key] = $errors;
+            $this->validated[$key] = $validator->value;
         }
 
         $this->handleErrors();
 
-        return $this->validated;
+        return $this->toDto();
     }
 
     /**
@@ -81,6 +83,21 @@ abstract class FormRequest
     protected function setRules(): void
     {
         $this->rules = $this->rules() + $this->paginationRules();
+    }
+
+    public function toDto()
+    {
+        $reflection = new ReflectionClass($this);
+
+        $attributes = $reflection->getAttributes(FormDto::class);
+        if (empty($attributes)) {
+            return $this->validated;
+        }
+
+        /** @var FormDto $dto */
+        $dto = $attributes[0]->newInstance();
+
+        return new ($dto->class)(...$this->validated);
     }
 
     /**

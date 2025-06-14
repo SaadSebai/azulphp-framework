@@ -1,6 +1,6 @@
 <?php
 
-use Azulphp\Response\ResponseStatus;
+use Azulphp\Routing\Response\ResponseStatus;
 use Azulphp\Routing\Router;
 use Azulphp\Session;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Azulphp\Response;
+namespace Azulphp\Routing\Response;
 
 interface Response
 {
