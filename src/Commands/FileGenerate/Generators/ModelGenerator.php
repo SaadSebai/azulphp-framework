@@ -3,7 +3,6 @@
 namespace Azulphp\Commands\FileGenerate\Generators;
 
 use Azulphp\Commands\FileGenerate\FileGenerator;
-use Azulphp\Commands\Support\Output;
 use Azulphp\Helpers\Str;
 
 /**
@@ -70,7 +69,7 @@ class ModelGenerator extends FileGenerator
             }
         }
 
-        return $imports . PHP_EOL;
+        return $imports !== '' ? $imports . PHP_EOL: $imports;
     }
 
     /**

@@ -5,7 +5,8 @@ namespace Azulphp\Routing;
 use Azulphp\Core\App;
 use Azulphp\Core\Config;
 use Azulphp\Exceptions\ValidationException;
-use Azulphp\Helpers\ResponseStatus;
+use Azulphp\Response\ResponseHandler;
+use Azulphp\Response\ResponseStatus;
 use Azulphp\Routing\Requests\FormRequest;
 use Azulphp\Session;
 use BadMethodCallException;
@@ -110,6 +111,7 @@ class Router
      *
      * @return mixed|void
      * @throws ReflectionException
+     * @throws \JsonException
      */
     public function route()
     {
@@ -133,7 +135,9 @@ class Router
                 // Injected Requests
                 $requests = $this->paramsInject($route['controller'], $route['function'], $matches, FormRequest::class);
 
-                return (new $route['controller'])->{$route['function']}(...$requests, ...$matches);
+                $response = (new $route['controller'])->{$route['function']}(...$requests, ...$matches);
+
+                return ResponseHandler::handle($response);
             }
         }
 

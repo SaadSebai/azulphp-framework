@@ -5,7 +5,7 @@ namespace Azulphp\Collections;
 /**
  * @template T
  */
-class Pagination
+class Pagination implements Arrayable
 {
     /**
      * @var Collection<T>
@@ -113,5 +113,10 @@ class Pagination
         $data = $this;
 
         require base_path('views/layouts/partials/pagination.layout.php');
+    }
+
+    public function toArrayTree(): array
+    {
+        return $this->collection->toArrayTree();
     }
 }

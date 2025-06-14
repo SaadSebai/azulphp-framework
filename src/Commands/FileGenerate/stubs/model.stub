@@ -2,7 +2,9 @@
 
 namespace App\Models{{ namespace }};
 {{ imports }}
-class {{ class }}
+use Azulphp\Models\Model;
+
+class {{ class }} extends Model
 {
 {{ contant }}
 }

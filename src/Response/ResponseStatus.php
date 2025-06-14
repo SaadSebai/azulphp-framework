@@ -1,6 +1,6 @@
 <?php
 
-namespace Azulphp\Helpers;
+namespace Azulphp\Response;
 
 class ResponseStatus
 {

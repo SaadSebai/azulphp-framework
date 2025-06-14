@@ -12,7 +12,7 @@ use Traversable;
  * @template T
  * @implements IteratorAggregate<mixed, T>
  */
-class Collection implements ArrayAccess, Countable, IteratorAggregate
+class Collection implements ArrayAccess, Countable, IteratorAggregate, Arrayable
 {
     /**
      * @param  array<mixed, T>  $items
@@ -105,5 +105,27 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
     public function isEmpty(): bool
     {
         return empty($this->items);
+    }
+
+    public function toArrayTree(): array
+    {
+        $result = [];
+
+        foreach ($this->items as $element)
+        {
+            if ($element instanceof Collection)
+            {
+                $result[] = $element->toArrayTree();
+            }
+            else
+            {
+                if ($element instanceof Arrayable)
+                    $result[] = $element->toArray();
+                else
+                    $result[] = $element;
+            }
+        }
+
+        return $result;
     }
 }

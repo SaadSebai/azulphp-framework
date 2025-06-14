@@ -1,6 +1,6 @@
 <?php
 
-use Azulphp\Helpers\ResponseStatus;
+use Azulphp\Response\ResponseStatus;
 use Azulphp\Routing\Router;
 use Azulphp\Session;
 
@@ -26,26 +26,6 @@ function dd(mixed $value): void
 function base_path(string $path): string
 {
     return BASE_PATH . $path;
-}
-
-function view(string $path, array $attributes = [], ?string $layout = null): bool
-{
-    extract($attributes);
-
-    if ($layout)
-    {
-        ob_start();
-        require base_path("views/{$path}.view.php");
-        $slot = ob_get_clean();
-
-        require base_path("views/layouts/$layout.php");
-    }
-    else
-    {
-        require base_path("views/{$path}.view.php");
-    }
-
-    return true;
 }
 
 function partial(string $path): void
@@ -113,3 +93,5 @@ function valideVarType(string $type): bool
 {
     return in_array($type, phpTypes()) || valideObjectType($type);
 }
+
+require_once __DIR__ . '/../Response/helpers/view_helpers.php';
