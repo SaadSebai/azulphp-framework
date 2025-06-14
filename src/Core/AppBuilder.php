@@ -13,6 +13,7 @@ class AppBuilder
     public function __construct()
     {
         $this->container = new Container();
+        Env::set(BASE_PATH);
     }
 
     /**
