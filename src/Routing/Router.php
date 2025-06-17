@@ -316,8 +316,10 @@ class Router
         catch (Exception $exception) {
             $config = App::resolve(Config::class);
 
-            if($config->getConfig('production')) abort(ResponseStatus::SERVER_ERROR);
-            else throw $exception;
+            if($config->getConfig('production') === 'production') abort(ResponseStatus::SERVER_ERROR);
+            else {
+                echo view('default/exception', compact('exception'))->response();
+            }
         }
 
         register_shutdown_function(function () {

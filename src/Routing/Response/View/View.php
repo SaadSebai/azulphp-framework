@@ -4,8 +4,12 @@ namespace Azulphp\Routing\Response\View;
 
 class View
 {
-    public static function make(string $path, array $attributes = [], ?string $layout = null, string $viewResponse = VanillaView::class): ViewResponse
+    public function __construct()
     {
-        return new $viewResponse($path, $attributes, $layout);
+    }
+
+    public static function make(string $path, array $params = [], ?string $layout = null, string $viewResponse = LapisResponse::class): ViewResponse
+    {
+        return new $viewResponse($path, $params, $layout);
     }
 }

@@ -1,15 +1,10 @@
 <?php
 
-use Azulphp\Routing\Response\View\VanillaView;
+use Azulphp\Routing\Response\View\LapisResponse;
 use Azulphp\Routing\Response\View\View;
 use Azulphp\Routing\Response\View\ViewResponse;
 
-function view(string $path, array $attributes = [], ?string $layout = null, string $viewResponse = VanillaView::class): ViewResponse
+function view(string $path, array $params = [], ?string $layout = null, string $viewResponse = LapisResponse::class): ViewResponse
 {
-    return View::make($path, $attributes, $layout, $viewResponse);
-}
-
-function partial(string $path): void
-{
-    require base_path("views/$path.php");
+    return View::make($path, $params, $layout, $viewResponse);
 }

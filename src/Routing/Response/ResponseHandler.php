@@ -13,16 +13,11 @@ class ResponseHandler
      *
      * @throws JsonException
      */
-    public static function handle($response)
+    public static function handle($response): void
     {
-        if ($response instanceof ViewResponse)
-            $response->response();
-        elseif ($response instanceof ApiResponse)
+        if ($response instanceof Response)
             echo $response->response();
-        else {
+        else
             echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
-        }
-
-        return;
     }
 }

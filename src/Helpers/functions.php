@@ -6,6 +6,13 @@ use Azulphp\Session;
 
 function dd(mixed $value): void
 {
+    static $called = false;
+    if ($called) {
+        // Prevent recursive calls
+        return;
+    }
+    $called = true;
+
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1] ?? null;
 
     echo "<pre style='background:#f5f5f5;padding:10px;border-left:5px solid #ccc;'>";
@@ -13,14 +20,18 @@ function dd(mixed $value): void
     if ($backtrace) {
         $class = $backtrace['class'] ?? '';
         $line = $backtrace['line'] ?? '';
-
-        echo "$class line $line\n\n";
+        echo htmlspecialchars("$class line $line\n\n");
     }
 
+    ob_start();
     var_dump($value);
+    $dump = ob_get_clean();
+
+    echo htmlspecialchars($dump);
+
     echo "</pre>";
 
-    die();
+    exit;
 }
 
 function old(string $key, ?string $default = ''): string
@@ -33,7 +44,7 @@ function abort($code = ResponseStatus::NOT_FOUND): void
 {
     http_response_code($code);
 
-    view(path: "default/{$code}");
+    echo view(path: "default/{$code}")->response();
 
     die();
 }

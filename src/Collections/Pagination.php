@@ -112,7 +112,7 @@ class Pagination implements Arrayable
     {
         $data = $this;
 
-        require base_path('views/layouts/partials/pagination.layout.php');
+        require base_path('resources/views/layouts/partials/pagination.layout.php');
     }
 
     public function toArrayTree(): array
